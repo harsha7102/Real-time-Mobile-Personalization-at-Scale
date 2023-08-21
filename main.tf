@@ -223,3 +223,24 @@ resource "confluent_connector" "source3" {
     prevent_destroy = true
   }
 }
+
+resource "confluent_ksql_cluster" "pce_enrich" {
+  display_name = "pce_enrich"
+  csu          = 4
+  kafka_cluster {
+    id = confluent_kafka_cluster.basic.id
+  }
+  credential_identity {
+    id = confluent_service_account.tf_pce.id
+  }
+  environment {
+   id = confluent_environment.Customer_success.id
+  }
+  
+
+
+  lifecycle {
+    prevent_destroy = true
+  }
+
+}
