@@ -1,6 +1,6 @@
 resource "confluent_environment" "Customer_success" {
   display_name = "Customer_success"
-
+  
   lifecycle {
     prevent_destroy = true
   }
@@ -108,27 +108,30 @@ resource "confluent_kafka_topic" "Clicks" {
   }
 }
 
-resource "confluent_connector" "source" {
-  environment {
-    id = confluent_environment.Customer_success.id
-  }
-  kafka_cluster {
-    id = confluent_kafka_cluster.basic.id
-  }
+resource "confluentcloud_kafka_connector" "postgres_cdc_source" {
+  name = "postgres-cdc-source"
 
-  config_sensitive = {}
-
-  config_nonsensitive = {
-    "connector.class"          = "DatagenSource"
-    "name"                     = "DatagenSourceConnector_0"
-    "kafka.auth.mode"          = "KAFKA_API_KEY"
-    "kafka.api.key"            = confluent_api_key.app-manager-kafka-api-key.id
-    "kafka.api.secret"         = confluent_api_key.app-manager-kafka-api-key.secret
-    "kafka.topic"              = confluent_kafka_topic.Users.topic_name
-    "output.data.format"       = "JSON"
-    "quickstart"               = "USERS"
-    "tasks.max"                = "1"
+  config = {
+    "connector.class"            = "io.debezium.connector.postgresql.PostgresConnector",
+    "database.hostname"          = "your-postgres-hostname-here",
+    "database.port"              = "your-postgres-port-here",
+    "database.user"              = "your-postgres-username-here",
+    "database.password"          = "your-postgres-password-here",
+    "database.dbname"            = "your-postgres-dbname-here",
+    "database.server.name"       = "your-postgres-server-name-here",
+    "table.whitelist"            = "your-postgres-table-whitelist-here",
+    "plugin.name"                = "pgoutput",
+    "slot.name"                  = "your-postgres-slot-name-here",
+    "snapshot.mode"              = "never",
+    "transforms"                 = "unwrap",
+    "transforms.unwrap.type"     = "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones" = "false",
+    "value.converter"            = "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable" = "false",
+    "key.converter"              = "org.apache.kafka.connect.storage.StringConverter",
+    "key.converter.schemas.enable" = "false"
   }
+}
 
 
 
@@ -221,6 +224,35 @@ resource "confluent_connector" "source3" {
 
   lifecycle {
     prevent_destroy = true
+  }
+}
+
+resource "confluentcloud_kafka_connector" "bigquery_sink" {
+  name = "bigquery-sink"
+
+  config = {
+    "connector.class"             = "com.wepay.kafka.connect.bigquery.BigQuerySinkConnector",
+    "topics"                      = "your-kafka-topic-here",
+    "auto.create.topics.enable"   = "false",
+    "project"                     = "your-bigquery-project-here",
+    "datasets"                    = "your-bigquery-dataset-here",
+    "keyfile"                     = "your-bigquery-keyfile-here",
+    "keyfile.password"            = "your-bigquery-keyfile-password-here",
+    "autoCreateTables"            = "true",
+    "autoUpdateSchemas"           = "true",
+    "allowNewBigQueryFields"      = "true",
+    "allowBigQueryRequiredFieldRelaxation" = "true",
+    "bigQueryRetryPolicy"         = "retryTransientErrors",
+    "bigQueryRetryWait"           = "60000",
+    "bigQueryRetryLimit"          = "10",
+    "bufferSize"                  = "1000000",
+    "maxWriteSize"                = "1000000",
+    "key.converter"               = "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter"             = "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable" = "false",
+    "transforms"                  = "unwrap",
+    "transforms.unwrap.type"      = "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones" = "false"
   }
 }
 
