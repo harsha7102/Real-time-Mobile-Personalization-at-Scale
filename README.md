@@ -42,7 +42,7 @@ In order to successfully complete this demo you need to install few tools before
 
  Now Click Add Key to generate API keys and store it as we will be using that key in this demo.
  <div align="center"> 
-  <img src="images/apis.png" width =100% heigth=100%>
+  <img src="Images/apis.png" width =100% heigth=100%>
 </div>
     
    > **Note:** This is different than Kafka cluster API keys.
