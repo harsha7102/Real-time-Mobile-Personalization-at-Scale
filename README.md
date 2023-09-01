@@ -83,7 +83,7 @@ variable "confluent_cloud_api_secret" {
 
    > **Note:** Read the `main.tf` configuration file [to see what will be created](./terraform/main.tf).
 
-
+1. Also, please change the place holders for PostgresCDC and BigquerySink connectors.
  # Demo
 
 We do not use any Producers to mock the data instead we used Datagen connectors for the sake of it. 
