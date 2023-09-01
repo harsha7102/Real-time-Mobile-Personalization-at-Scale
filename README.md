@@ -37,7 +37,7 @@ In order to successfully complete this demo you need to install few tools before
 
 1. Create Confluent Cloud API keys by following the steps in UI.Click on the button that is present on the right top section and click on Cloud API Key.
 <div align="center"> 
-  <img src="Images/apikeys.jpeg" width =50% heigth=50%>
+  <img src="Images/apikeys.jpeg" width = 10% heigth=10%>
 </div>
 
  Now Click Add Key to generate API keys and store it as we will be using that key in this demo.
