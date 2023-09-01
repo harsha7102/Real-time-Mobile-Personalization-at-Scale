@@ -12,7 +12,7 @@ A beacon service keeps track of the endpoints where the application is actively 
 All the user interactions with the content such as clicks/watches/scrolls are captured by the mobile app and relayed to the clicks tracker service, which publishes it to Confluent Cloud. This again required additional information related to user attributes, which was achieved using similar ksqlDB stream-table joins. One of the significant architectural advantages with Confluent Cloud is the ability to read the same data multiple times by individual consumers for various use cases. This is called fanout, which is supported inherently in the platform. This helped the organization save costs without duplicating the same message into multiple queues. Dashboarding and reporting in real-time was possible using Google Cloud BigQuery Managed Sink Connector collecting all the data from the required topics and sinking it into Google BigQuery, which in turn is integrated with visualization tools.
 
 <div align="center"> 
-  <img src="images/architectur.png" width =100% heigth=100%>
+  <img src="Images/architectur.png" width =100% heigth=100%>
 </div>
 
 
