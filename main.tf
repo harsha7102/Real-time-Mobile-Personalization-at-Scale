@@ -138,7 +138,7 @@ resource "confluentcloud_kafka_connector" "postgres_cdc_source" {
   lifecycle {
     prevent_destroy = true
   }
-}
+
 
 resource "confluent_connector" "source1" {
   environment {
