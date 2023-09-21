@@ -16,6 +16,10 @@ All the user interactions with the content such as clicks/watches/scrolls are ca
 </div>
 
 
+## Overview
+By following this GitHub repository you can get you Confluent cloud setup required for Real-Time Mobile Personalization at Scale up and running.
+Environment, Service Account,API Keys,connectors,Topic, KSQL Cluster,Streams,Table and everything required will be up and running in your Cloud account.
+Please note you might need to add you own producers later on ad Datagen connectors have been used here to mock the real time data.
 
 # Requirements
 
@@ -48,6 +52,8 @@ In order to successfully complete this demo you need to install few tools before
    > **Note:** This is different than Kafka cluster API keys.
 
 ## Setup
+The terraform script provided will help you automate everything that you need in your cloud account from Environment,Sevice account to KSQLdb Cluster.
+Please note that you need to run KSQL queries manually in order create streams, tables and perfrom joins.
 
 1. This demo uses Terraform  to spin up resources that are needed.
 
@@ -63,6 +69,8 @@ variable "confluent_cloud_api_secret" {
   default = "Replace with your API Key created during pre-requsite"   
 }
 ```
+3. Also, please change the place holders for PostgresCDC and BigquerySink connectors.
+
  ### Build your cloud infrastructure
 
 1. Navigate to the repo's terraform directory.
@@ -83,12 +91,11 @@ variable "confluent_cloud_api_secret" {
 
    > **Note:** Read the `main.tf` configuration file [to see what will be created](./terraform/main.tf).
 
-1. Also, please change the place holders for PostgresCDC and BigquerySink connectors.
  # Demo
 
 We do not use any Producers to mock the data instead we used Datagen connectors for the sake of it. 
 
-## Enrich Data Streams with ksqlDB
+# Enrich Data Streams with ksqlDB
 
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
