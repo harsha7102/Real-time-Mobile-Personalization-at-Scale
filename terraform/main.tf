@@ -113,19 +113,13 @@ resource "confluentcloud_kafka_connector" "postgres_cdc_source" {
 
   config = {
     "connector.class"            = "io.debezium.connector.postgresql.PostgresConnector",
+    "topics"                      = "your-kafka-topic-here",
     "database.hostname"          = "your-postgres-hostname-here",
     "database.port"              = "your-postgres-port-here",
     "database.user"              = "your-postgres-username-here",
     "database.password"          = "your-postgres-password-here",
     "database.dbname"            = "your-postgres-dbname-here",
     "database.server.name"       = "your-postgres-server-name-here",
-    "table.whitelist"            = "your-postgres-table-whitelist-here",
-    "plugin.name"                = "pgoutput",
-    "slot.name"                  = "your-postgres-slot-name-here",
-    "snapshot.mode"              = "never",
-    "transforms"                 = "unwrap",
-    "transforms.unwrap.type"     = "io.debezium.transforms.ExtractNewRecordState",
-    "transforms.unwrap.drop.tombstones" = "false",
     "value.converter"            = "org.apache.kafka.connect.json.JsonConverter",
     "value.converter.schemas.enable" = "false",
     "key.converter"              = "org.apache.kafka.connect.storage.StringConverter",
@@ -169,34 +163,7 @@ resource "confluent_connector" "source1" {
   }
 }
 
-resource "confluent_connector" "source2" {
-  environment {
-    id = confluent_environment.Customer_success.id
-  }
-  kafka_cluster {
-    id = confluent_kafka_cluster.basic.id
-  }
 
-  config_sensitive = {}
-
-  config_nonsensitive = {
-    "connector.class"          = "DatagenSource"
-    "name"                     = "DatagenSourceConnector_2"
-    "kafka.auth.mode"          = "KAFKA_API_KEY"
-    "kafka.api.key"            = confluent_api_key.app-manager-kafka-api-key.id
-    "kafka.api.secret"         = confluent_api_key.app-manager-kafka-api-key.secret
-    "kafka.topic"              = confluent_kafka_topic.Clicks.topic_name
-    "output.data.format"       = "JSON"
-    "quickstart"               = "Users"
-    "tasks.max"                = "1"
-  }
-
-
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
 
 resource "confluent_connector" "source3" {
   environment {
