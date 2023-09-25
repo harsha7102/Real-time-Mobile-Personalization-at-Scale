@@ -176,7 +176,11 @@ WHERE liked="yes"
 OR shared="yes"
 EMIT CHANGES;
 ```
-8.The KSQL Stream flow diagram is attached for your reference
+
+8. Last_min_content is popular content in last 5 minutes where customer opened the content (not just clicked)
+Impressions_Count stream describes if they liked, shared the content.
+
+9. The KSQL Stream flow diagram is attached for your reference
  <div align="center"> 
   <img src="Images/Stream_flow.png" width =50% heigth=50%>
 </div>
