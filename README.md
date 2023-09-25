@@ -216,7 +216,7 @@ Refer to our [documentation](https://www.confluent.io/product/connectors/) for d
 
 ## Congratulations
 
-By utilizing SQL-like commands, we have developed a real-time telemetry event processing system that calculates the kill ratio for each player in real-time. This system can send the results directly back to the game server, improving the overall user experience or to other external systems.With this system, we can process and analyze data in real-time, allowing for better decision-making and driving better business outcomes.
+By utilizing SQL-like commands, we have developed a real-time mobile presentation event processing system that calculates the impression count for each user in real-time. This system can send the results to the bigquery where we can run our ML/CDN models as shown in the architecture diagram, improving the overall user experience or to other external systems.With this system, we can process and analyze data in real-time, allowing for better decision-making and driving better business outcomes.
 
 # Teardown
 
