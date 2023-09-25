@@ -10,8 +10,8 @@ resource "confluent_environment" "Customer_success" {
 resource "confluent_kafka_cluster" "basic" {
   display_name = "Customer_success"
   availability = "SINGLE_ZONE"
-  cloud        = "AWS"
-  region       = "ap-south-1"
+  cloud        = "GCP"
+  region       = "asia-south1"
   basic {}
 
   environment {

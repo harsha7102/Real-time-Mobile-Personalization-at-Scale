@@ -55,6 +55,7 @@ In order to successfully complete this demo you need to install few tools before
 The terraform script provided will help you automate everything that you need in your cloud account from Environment,Sevice account to KSQLdb Cluster.
 Please note that you need to run KSQL queries manually in order create streams, tables and perfrom joins.
 
+**NOTE: For BigQuery Sink Connector to work you need to create the cluster in the same region as your GCP**
 1. This demo uses Terraform  to spin up resources that are needed.
 
 2. Update the `terraform/variables.tf` file for the following variables with your Cloud API credentials.
@@ -70,6 +71,8 @@ variable "confluent_cloud_api_secret" {
 }
 ```
 3. Also, please change the place holders for PostgresCDC and BigquerySink connectors.
+
+4. We Use postgresDB to fetch the Click data of the User. Make sure you have columns like userID,liked,shared(whether the user had liked or shared the content or not.Basically a yes or no column.)
 
  ### Build your cloud infrastructure
 
