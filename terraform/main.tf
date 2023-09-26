@@ -165,7 +165,7 @@ resource "confluent_connector" "source1" {
 
 
 
-resource "confluent_connector" "source3" {
+resource "confluent_connector" "source2" {
   environment {
     id = confluent_environment.Customer_success.id
   }

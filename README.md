@@ -1,6 +1,6 @@
 # Real-Time Mobile Personalization at Scale
 
-In today’s hyper-connected era, customers demand nothing less than instant access to tailor-made, meaningful content that resonates with their individual needs and preferences.This post details how organizations can leverage the power of cloud-native data streaming in Confluent Cloud and features such as fully managed source and sink connectors for PostgreSQL CDC, BigQuery, stream processing and stream governance, to create personalized and relevant content for different customers segments to keep them engaged with their brand and keep them coming back for more.
+In today’s hyper-connected era, customers demand nothing less than instant access to tailor-made, meaningful content that resonates with their individual needs and preferences.This post details how organizations can leverage the power of cloud-native data streaming in Confluent Cloud and features such as fully managed source and sink connectors for PostgreSQL CDC, BigQuery, stream processing and stream governance, to create personalized and relevant content for different customers segments to keep them engaged with their brand and keep them coming back for more.We will develop a real-time mobile service that calculates the impression count in real-time, to make it easy to monitor what content is resonating with users. 
 
 
 ## Architecture Diagram
@@ -19,7 +19,7 @@ All the user interactions with the content such as clicks/watches/scrolls are ca
 ## Overview
 By following this GitHub repository you can get you Confluent cloud setup required for Real-Time Mobile Personalization at Scale up and running.
 Environment, Service Account,API Keys,connectors,Topic, KSQL Cluster,Streams,Table and everything required will be up and running in your Cloud account.
-Please note you might need to add you own producers later on ad Datagen connectors have been used here to mock the real time data.
+Datagen connectors have been used here to mock the source datasets being used.  You may have to modify this based on the datasets being used in your own instance
 
 # Requirements
 
@@ -97,13 +97,13 @@ variable "confluent_cloud_api_secret" {
  # Demo
 
 We do not use any Producers to mock the data instead we used Datagen connectors for the sake of it. 
-The Datagen Connectors provided in the Terraform code generate some sample User data.
+The Datagen Connectors provided in the Terraform code generate some sample User data. Datagen by default has an option to generate User Data, this data consists of fields like userid,regionid and gender.
 
 #### Enrich Data Streams with ksqlDB
 
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
-<B>This section will involve the creation of multiple Streams that will enrich the existig streams using joins and also get some windowed aggregates.The Users, Activr users and the Clicks data will be imvolved in these joins to create these Enriched streams and aggregates.<B>
+<B>This section will involve the creation of multiple streams based on enrichments of existing streams using joins and windowed aggregates.The Users, Active users and the Clicks data will be involved in these joins to create these enriched streams and aggregates.<B>
 
 If you’re interested in learning more about ksqlDB and the differences between streams and tables, I recommend reading these two blogs [here](https://www.confluent.io/blog/kafka-streams-tables-part-3-event-processing-fundamentals/) and [here](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/).
 
@@ -225,17 +225,6 @@ Refer to our [documentation](https://www.confluent.io/product/connectors/) for d
 
 By utilizing SQL-like commands, we have developed a real-time mobile presentation event processing system that calculates the impression count for each user in real-time. This system can send the results to the bigquery where we can run our ML/CDN models as shown in the architecture diagram, improving the overall user experience or to other external systems.With this system, we can process and analyze data in real-time, allowing for better decision-making and driving better business outcomes.
 
-# Teardown
-
-You want to delete any resources that were created during the demo so you don't incur additional charges.
-
-
-## Infrastructure
-
-1. Run the following command to delete all resources created by Terraform
-   ```bash
-   terraform apply -destory
-
 ## Confluent Cloud Stream Governance
 
 Confluent offers data governance tools such as Stream Quality, Stream Catalog, and Stream Lineage in a package called Stream Governance. These features ensure your data is high quality, observable and discoverable. Learn more about **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information.
@@ -247,6 +236,17 @@ Confluent offers data governance tools such as Stream Quality, Stream Catalog, a
     - Where did data come from?
     - Where is it going?
     - Where, when, and how was it transformed?
+
+# Teardown
+
+You want to delete any resources that were created during the demo so you don't incur additional charges.
+
+
+## Infrastructure
+
+1. Run the following command to delete all resources created by Terraform
+   ```bash
+   terraform apply -destory
     
 # References
 
