@@ -70,7 +70,7 @@ variable "confluent_cloud_api_secret" {
   default = "Replace with your API Key created during pre-requsite"   
 }
 ```
-3. Also, please change the place holders for PostgresCDC and BigquerySink connectors.
+3. Also, please change the place holders for PostgresCDC and BigquerySink connectors where in you need to fill the details of you connection like hostname,topic etc..
 
 4. We Use postgresDB to fetch the Click data of the User. Make sure you have columns like userID,liked,shared(whether the user had liked or shared the content or not.Basically a yes or no column.)
 
@@ -172,13 +172,25 @@ GROUP BY userid
 EMIT CHANGES;
 ```
 
+The final output of this stream will look like:
+
+ <div align="center"> 
+  <img src="Images/str.png" width =50% heigth=50%>
+</div>
+
 ```SQL
-Create Stream Impression_count AS
-Select * from Clicks_enriched
-WHERE liked="yes"
-OR shared="yes"
+Create Stream Impression_countwith (value_format='JSON') AS
+Select * 
+from Clicks_enriched
+WHERE liked= 'yes' OR shared= 'yes'
 EMIT CHANGES;
 ```
+
+The final output of this stream will look like:
+
+ <div align="center"> 
+  <img src="Images/str1.png" width =50% heigth=50%>
+</div>
 
 8. Last_min_content is popular content in last 5 minutes where customer opened the content (not just clicked)
 Impressions_Count stream describes if they liked, shared the content.
