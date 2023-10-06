@@ -99,7 +99,7 @@ variable "confluent_cloud_api_secret" {
 We do not use any Producers to mock the data, instead we used Datagen connectors for the sake of it. 
 The Datagen Connectors provided in the Terraform code generate some sample User data. Datagen by default has an option to generate User Data, this data consists of fields like userid,regionid and gender.
 
-<h3>Enrich Data Streams with ksqlDB</h3>
+<p style="font-size:50px">Enrich Data Streams with ksqlDB<p>
 
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
