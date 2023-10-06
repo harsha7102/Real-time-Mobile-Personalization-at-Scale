@@ -17,13 +17,13 @@ All the user interactions with the content such as clicks/watches/scrolls are ca
 
 
 ## Overview
-By following this GitHub repository you can get you Confluent cloud setup required for Real-Time Mobile Personalization at Scale up and running.
+By following this GitHub repository you can get your Confluent cloud setup required for Real-Time Mobile Personalization at Scale up and running.
 Environment, Service Account,API Keys,connectors,Topic, KSQL Cluster,Streams,Table and everything required will be up and running in your Cloud account.
 Datagen connectors have been used here to mock the source datasets being used.  You may have to modify this based on the datasets being used in your own instance
 
 # Requirements
 
-In order to successfully complete this demo you need to install few tools before getting started.
+In order to successfully complete this demo you need to install a few tools before getting started.
 
 - If you don't have a Confluent Cloud account, sign up for a free trial [here](https://www.confluent.io/confluent-cloud/tryfree).
 - Install Confluent Cloud CLI by following the instructions [here](https://docs.confluent.io/confluent-cli/current/install.html).
@@ -37,7 +37,7 @@ In order to successfully complete this demo you need to install few tools before
 1. After verifying your email address, access Confluent Cloud sign-in by navigating [here](https://confluent.cloud).
 1. When provided with the _username_ and _password_ prompts, fill in your credentials.
 
-   > **Note:** If you're logging in for the first time you will see a wizard that will walk you through the some tutorials. Minimize this as you will walk through these steps in this guide.
+   > **Note:** If you're logging in for the first time you will see a wizard that will walk you through some tutorials. Minimize this as you will walk through these steps in this guide.
 
 1. Create Confluent Cloud API keys by following the steps in UI.Click on the button that is present on the right top section and click on Cloud API Key.
 <div align="center"> 
@@ -49,11 +49,11 @@ In order to successfully complete this demo you need to install few tools before
   <img src="Images/apis.png" width =50% heigth=50%>
 </div>
     
-   > **Note:** This is different than Kafka cluster API keys.
+   > **Note:** This is different from Kafka cluster API keys.
 
 ## Setup
-The terraform script provided will help you automate everything that you need in your cloud account from Environment,Sevice account to KSQLdb Cluster.
-Please note that you need to run KSQL queries manually in order create streams, tables and perfrom joins.
+The terraform script provided will help you automate everything that you need in your cloud account from Environment,Service account to KSQLdb Cluster.
+Please note that you need to run KSQL queries manually in order to create streams, tables and perform joins.
 
 **NOTE: For BigQuery Sink Connector to work you need to create the cluster in the same region as your GCP**
 1. This demo uses Terraform  to spin up resources that are needed.
@@ -63,14 +63,14 @@ Please note that you need to run KSQL queries manually in order create streams, 
 ```
 variable "confluent_cloud_api_key" {
   
-  default = " Replace with your API Key created during pre-requsite"   
+  default = " Replace with your API Key created during prerequisite"   
 }
 
 variable "confluent_cloud_api_secret" {
-  default = "Replace with your API Key created during pre-requsite"   
+  default = "Replace with your API Key created during prerequisite"   
 }
 ```
-3. Also, please change the place holders for PostgresCDC and BigquerySink connectors where in you need to fill the details of you connection like hostname,topic etc..
+3. Also, please change the place holders for PostgresCDC and BigquerySink connectors wherein you need to fill in the details of your connection like hostname,topic etc..
 
 4. We Use postgresDB to fetch the Click data of the User. Make sure you have columns like userID,liked,shared(whether the user had liked or shared the content or not.Basically a yes or no column.)
 
@@ -96,10 +96,10 @@ variable "confluent_cloud_api_secret" {
 
  # Demo
 
-We do not use any Producers to mock the data instead we used Datagen connectors for the sake of it. 
+We do not use any Producers to mock the data, instead we used Datagen connectors for the sake of it. 
 The Datagen Connectors provided in the Terraform code generate some sample User data. Datagen by default has an option to generate User Data, this data consists of fields like userid,regionid and gender.
 
-#### Enrich Data Streams with ksqlDB
+***Enrich Data Streams with ksqlDB***
 
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
@@ -116,9 +116,9 @@ If you’re interested in learning more about ksqlDB and the differences between
    SET 'auto.offset.reset' = 'earliest';
    ```
 
-   If you use the default value of `latest`, then ksqlDB will read form the tail of the topics rather than the beginning, which means streams and tables won't have all the data you think they should.
+   If you use the default value of `latest`, then ksqlDB will read from the tail of the topics rather than the beginning, which means streams and tables won't have all the data you think they should.
 
-3. Build Streams on topics Active_Users and Clicks.= For achieving this you can use the following command. Pleae note, Columns here are basically Feild names in the topic.
+3. Build Streams on topics Active_Users and Clicks.= For achieving this you can use the following command. Please note, Columns here are basically Field names in the topic.
 ```SQL
 CREATE STREAM Stream_Name (
     Col 1 DataType,
@@ -138,7 +138,7 @@ CREATE TABLE Users (user_id VARCHAR PRIMARY KEY, regionid VARCHAR , gender VARCH
 );
 ``` 
 
-5. Now we need to perform Stream-Table join between Active_Users stream and Users table. This will essentially create a new stream Active_enriched.
+5. Now we need to perform a Stream-Table join between Active_Users stream and Users table. This will essentially create a new stream Active_enriched.
 ``` SQL
 CREATE STREAM Active_enriched AS
   SELECT 
@@ -203,7 +203,7 @@ Impressions_Count stream describes if they liked, shared the content.
 
 ## Connect External System  to sink Enriched Events from  Confluent Cloud using Connector
 
-You can create  Sink connector either through CLI or Confluent Cloud web UI.
+You can create a Sink connector either through CLI or Confluent Cloud web UI.
 
 <details>
     <summary><b>CLI</b></summary>
@@ -245,7 +245,7 @@ Confluent offers data governance tools such as Stream Quality, Stream Catalog, a
 1.  Use the left hand-side menu and click on **Stream Lineage**.
     Stream lineage provides a graphical UI of the end to end flow of your data. Both from the a bird’s eye view and drill-down magnification for answering questions like:
 
-    - Where did data come from?
+    - Where did the data come from?
     - Where is it going?
     - Where, when, and how was it transformed?
 
@@ -269,3 +269,5 @@ You want to delete any resources that were created during the demo so you don't 
 4. Stream Governance [page](https://www.confluent.io/product/stream-governance/) and [doc](https://docs.confluent.io/cloud/current/stream-governance/overview.html)
 
   
+
+
